@@ -68,6 +68,7 @@ export type TemplateChipConfig = {
   hold_action?: ActionConfig;
   tap_action?: ActionConfig;
   double_tap_action?: ActionConfig;
+  label?: string;
   content?: string;
   icon?: string;
   icon_color?: string;

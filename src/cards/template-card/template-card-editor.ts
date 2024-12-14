@@ -18,6 +18,7 @@ export const TEMPLATE_LABELS = [
   "badge_icon",
   "badge_color",
   "content",
+  "label",
   "primary",
   "secondary",
   "multiline_secondary",

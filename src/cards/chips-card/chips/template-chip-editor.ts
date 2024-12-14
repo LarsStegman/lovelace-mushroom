@@ -25,6 +25,10 @@ const SCHEMA: HaFormSchema[] = [
     selector: { template: {} },
   },
   {
+    name: "label",
+    selector: { template: {} },
+  },
+  {
     name: "content",
     selector: { template: {} },
   },

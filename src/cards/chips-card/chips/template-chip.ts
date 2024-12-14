@@ -33,7 +33,7 @@ import {
 import { LovelaceChipEditor } from "../../../utils/lovelace/types";
 import { weatherSVGStyles } from "../../../utils/weather";
 
-const TEMPLATE_KEYS = ["content", "icon", "icon_color", "picture"] as const;
+const TEMPLATE_KEYS = ["content", "icon", "icon_color", "label", "picture"] as const;
 type TemplateKey = (typeof TEMPLATE_KEYS)[number];
 
 @customElement(computeChipComponentName("template"))
@@ -118,6 +118,7 @@ export class TemplateChip extends LitElement implements LovelaceChip {
     const icon = this.getValue("icon");
     const iconColor = this.getValue("icon_color");
     const content = this.getValue("content");
+    const label = this.getValue("label");
     const picture = this.getValue("picture");
 
     const rtl = computeRTL(this.hass);
@@ -141,7 +142,10 @@ export class TemplateChip extends LitElement implements LovelaceChip {
               ? this.renderIcon(icon, iconColor)
               : nothing
           : nothing}
-        ${content ? this.renderContent(content) : nothing}
+        <span class="info">
+          ${label ? html`<span class="label">${label}</span>` : nothing}
+          ${content ? html`<span class="content">${content}</span>` : nothing}
+        </span>
       </mushroom-chip>
     `;
   }
@@ -157,10 +161,6 @@ export class TemplateChip extends LitElement implements LovelaceChip {
       .icon=${icon}
       style=${styleMap(iconStyle)}
     ></ha-state-icon>`;
-  }
-
-  protected renderContent(content: string): TemplateResult {
-    return html`<span>${content}</span>`;
   }
 
   protected updated(changedProps: PropertyValues): void {
@@ -259,6 +259,31 @@ export class TemplateChip extends LitElement implements LovelaceChip {
       }
       ha-state-icon {
         color: var(--color);
+        line-height: 0;
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-right: 4px;
+        padding-inline-end: 4px;
+        padding-inline-start: initial;
+      }
+      .label {
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 10px;
+        letter-spacing: 0.1px;
+        color: var(--secondary-text-color);
+      }
+      .content {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0.1px;
+        color: var(--primary-text-color);
       }
       ${weatherSVGStyles}
     `;
